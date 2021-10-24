@@ -1,0 +1,48 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="description"
+      content="Mull Recognition: A standalone application for detecting waste!"
+    />
+    <meta name="keywords" content="Waste, Mull, Trash, Recognition, ML, AI, Camera" />
+    <meta name="author" content="Cristian Aldea" />
+    <title>Mull Recognition</title>
+    <base href="/" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="favicon.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital@0;1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/main.min.css" />
+
+    <script src="js/main.min.js"></script>
+  </head>
+  <body>
+    <div id="root">
+      <div class="app-container">
+        <header>
+          <div class="app-title">Welcome to Mull Recognition!</div>
+          <div class="app-description">Analyze objects and press on icons for more info!</div>
+          <div class="app-description">
+            Supported objects: bottle, box, computer keyboard, food, mobile phone, plastic bag, tin
+            can
+          </div>
+        </header>
+        <div class="mull-recognition-container">
+          <video class="mull-recognition-overlap" playsinline=""></video>
+          <canvas class="mull-recognition-overlap"></canvas>
+        </div>
+        <div class="mull-recognition-overlay-text">
+          Error: Permission to access the camera was denied
+        </div>
+        <footer>&copy; Copyright 2021, Cristian Aldea</footer>
+      </div>
+    </div>
+  </body>
+</html>

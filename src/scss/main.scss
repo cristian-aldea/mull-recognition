@@ -1,0 +1,70 @@
+@import "variables.scss";
+
+body,
+html,
+#root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+
+  background-color: #353535;
+  color: #ebebeb;
+
+  font-size: 16px;
+  font-family: "Roboto Mono", monospace;
+}
+
+footer {
+  padding: 1rem;
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+.app-container {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+}
+
+.mull-recognition-container {
+  position: relative;
+  flex: 1;
+}
+
+.mull-recognition-overlap {
+  position: absolute;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  z-index: 1;
+}
+
+.mull-recognition-overlay-text {
+  font-size: smaller;
+  color: white;
+  padding: 0.5rem;
+  text-align: center;
+  cursor: pointer;
+  flex-basis: 4rem;
+}
+
+header {
+  padding: 0.5rem;
+}
+
+.app-title {
+  text-align: center;
+}
+
+.app-description {
+  text-align: center;
+  font-size: small;
+}
+
+@media (min-width: 640px) {
+  .mull-recognition-overlay-text {
+    font-size: medium;
+    flex-basis: 3rem;
+  }
+}
