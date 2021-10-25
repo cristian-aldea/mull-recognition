@@ -57,7 +57,7 @@ const onVideoReady = async () => {
 const setupCamera = async () => {
   if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
     let stream = await navigator.mediaDevices.getUserMedia({
-      video: { facingMode: "environment" },
+      video: { facingMode: "environment", width: { ideal: 99999 }, height: { ideal: 99999 } },
       audio: false,
     });
 
