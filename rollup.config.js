@@ -1,22 +1,23 @@
+import typescript from "@rollup/plugin-typescript";
 import { terser } from "rollup-plugin-terser";
 import pkg from "./package.json";
 
 // Configs
 var configs = {
-  files: ["main.js"],
-  formats: ["iife", "es"],
+  files: ["main.ts"],
+  formats: ["iife"],
   default: "iife",
-  pathIn: "src/js",
+  pathIn: "src/ts",
   pathOut: "dist/js",
   minify: true,
   sourceMap: false,
 };
 
 // Banner
-var banner = `/* ${pkg.name} ${
+var banner = `/*! ${pkg.name} ${
   pkg.version ? "v" + pkg.version + " " : ""
 }| (c) ${new Date().getFullYear()}, ${pkg.author.name} | ${pkg.license} License${
-  pkg.repository.url ? " | " + pkg.repository.url : ""
+  pkg.repository ? " | " + pkg.repository.url : ""
 } */`;
 
 /**
@@ -36,7 +37,7 @@ var createOutput = (filename, minify) => {
       name: filename,
     };
     if (minify) {
-      output.plugins = [terser()];
+      output.plugins = [terser({ output: { comments: false } })];
     }
 
     output.sourcemap = configs.sourceMap;
@@ -72,12 +73,10 @@ var createExport = (file) => {
   return configs.files.map((file) => {
     return {
       input: `${configs.pathIn}/${file}`,
-      output: createOutputs(file.replace(".js", "")),
+      output: createOutputs(file.replace(".ts", "")),
+      plugins: [typescript()],
     };
   });
 };
-
-console.log(JSON.stringify(createExport(), null, 2));
-console.log(terser());
 
 export default createExport();

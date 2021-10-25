@@ -14,10 +14,10 @@ var configs = {
 };
 
 // Banner
-var banner = `/* ${pkg.name} ${
+var banner = `/*! ${pkg.name} ${
   pkg.version ? "v" + pkg.version + " " : ""
 }| (c) ${new Date().getFullYear()}, ${pkg.author.name} | ${pkg.license} License${
-  pkg.repository.url ? " | " + pkg.repository.url : ""
+  pkg.repository ? " | " + pkg.repository.url : ""
 } */`;
 
 var getOptions = function (file, filename, minify) {
