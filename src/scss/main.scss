@@ -2,11 +2,11 @@
 @import "modal.scss";
 
 // CSS reset
-body,
-html {
-  padding: 0;
+html,
+body {
   margin: 0;
-  background-color: #353535;
+  padding: 0;
+  background-color: #222222;
   color: white;
 
   font-size: 16px;
@@ -22,10 +22,21 @@ div {
   border: none;
   font-size: inherit;
   background-color: inherit;
+  color: inherit;
+  font-size: inherit;
+  font-family: inherit;
+}
+
+button {
+  cursor: pointer;
 }
 
 p {
   margin-top: 0.5rem;
+}
+
+h1 {
+  font-size: 1.5rem;
 }
 
 header {
@@ -84,8 +95,35 @@ footer {
   text-align: center;
 }
 
-h1 {
-  font-size: 1.5rem;
+#confirmation {
+  margin-top: 2rem;
+  text-align: center;
+
+  em {
+    font-weight: bold;
+    font-style: normal;
+    text-decoration: underline;
+    display: block;
+  }
+}
+
+#confirmation-button {
+  background-color: black;
+  padding: 1rem;
+  border-radius: 1rem;
+  margin-top: 1rem;
+
+  cursor: pointer;
+
+  transition: background-color 0.2s ease-out;
+}
+
+#confirmation-button:hover {
+  background-color: lighten($color: black, $amount: 10);
+}
+
+#confirmation-button:active {
+  background-color: lighten($color: black, $amount: 25);
 }
 
 @media (min-width: 640px) {

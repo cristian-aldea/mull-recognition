@@ -45,8 +45,12 @@
         <p class="description">Supported objects: <span id="supported-objects"></span></p>
       </header>
       <div class="recog-container">
-        <video id="video" class="overlap" playsinline=""></video>
-        <canvas id="canvas" class="overlap"></canvas>
+        <div id="confirmation">
+          <em>To run this application, large files will need to be downloaded.</em>
+          <button id="confirmation-button">I understand, launch the app!</button>
+        </div>
+        <video id="video" class="overlap" playsinline="" style="display: none"></video>
+        <canvas id="canvas" class="overlap" style="display: none"></canvas>
         <canvas id="hidden-canvas" hidden="true"></canvas>
         <div id="status-info" style="display: none"></div>
       </div>

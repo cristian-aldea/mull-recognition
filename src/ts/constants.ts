@@ -49,6 +49,6 @@ export const WasteIconMap: { [a in WasteCategory]: { image: HTMLImageElement; ur
   [WasteCategory.RECYCLABLE]: { image: new Image(), url: "svg/recycle-icon.svg" },
 };
 
-for (const [category, entry] of Object.entries(WasteIconMap)) {
+for (const entry of Object.values(WasteIconMap)) {
   entry.image.src = entry.url;
 }

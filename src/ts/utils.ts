@@ -1,10 +1,15 @@
 import { wasteClassMap, WasteIconMap } from "./constants";
+import {
+  modal,
+  modalDescription,
+  modalIcon,
+  modalImage,
+  modalTitle,
+  statusInfo,
+} from "./dom-elements";
 import { ResultRef } from "./main";
 import { TFJSModel } from "./tfjs.model";
 import { Box, DetectionResult, Point, Size } from "./types";
-
-let first = true;
-const statusInfo = document.getElementById("status-info") as HTMLDivElement;
 
 export const setStatusInfo = (message: any) => {
   statusInfo.textContent = message;
@@ -15,20 +20,14 @@ export const setStatusInfo = (message: any) => {
   }
 };
 
-const modal = document.getElementById("modal") as HTMLDivElement;
-const icon = document.getElementById("modal-icon") as HTMLImageElement;
-const title = document.getElementById("modal-title") as HTMLDivElement;
-const image = document.getElementById("modal-image") as HTMLImageElement;
-const description = document.getElementById("modal-description") as HTMLDivElement;
-
 export const showModal = (object: DetectionResult, imageSrc: string) => {
   const classInfo = wasteClassMap[object.class];
-  icon.src = WasteIconMap[classInfo.category].url;
-  title.textContent = object.class;
-  image.src = imageSrc;
-  description.textContent = `This seems to be a ${capitalizeString(object.class)}. ${
-    classInfo.info
-  }`;
+  modalIcon.src = WasteIconMap[classInfo.category].url;
+  modalTitle.textContent = object.class;
+  modalImage.src = imageSrc;
+  modalDescription.textContent = `This seems to be ${
+    object.class !== "food" ? "a " : ""
+  }${capitalizeString(object.class)}. ${classInfo.info}`;
   modal.style.display = "block";
 };
 
@@ -36,6 +35,7 @@ export const closeModal = () => {
   modal.style.display = "none";
 };
 
+let first = true;
 export const detectFrame = async (
   video: HTMLVideoElement,
   model: TFJSModel,

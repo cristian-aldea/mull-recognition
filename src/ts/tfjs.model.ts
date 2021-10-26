@@ -37,19 +37,19 @@ const detect = async (
   }
 
   /*
-        executeAsync will return an array of 8 Tensors, which are the following.
-        An asterick indicates that the info is useful to us
-        
-        output_node_name    name                          shape
-        Identity:0          detection_anchor_indices      [1, 100]
-        Identity_1:0*       detection_boxes               [1 100 4]
-        Identity_2:0*       detection_classes             [1 100]
-        Identity_3:0        detection_multiclass_scores   [1 100 5]
-        Identity_4:0*       detection_scores              [1 100]
-        Identity_5:0*       num_detections                [1]
-        Identity_6:0        raw_detection_boxes           [1 1917 4]
-        Identity_7:0        raw_detection_scores          [1 1917 5]
-       */
+    executeAsync will return an array of 8 Tensors, which are the following.
+    An asterick indicates that the tensor is useful to us, and will be processed
+    
+    output_node_name    name                          shape
+    Identity:0          detection_anchor_indices      [1, 100]
+    Identity_1:0*       detection_boxes               [1 100 4]
+    Identity_2:0*       detection_classes             [1 100]
+    Identity_3:0        detection_multiclass_scores   [1 100 5]
+    Identity_4:0*       detection_scores              [1 100]
+    Identity_5:0*       num_detections                [1]
+    Identity_6:0        raw_detection_boxes           [1 1917 4]
+    Identity_7:0        raw_detection_scores          [1 1917 5]
+  */
 
   const modelOutput = (await model.executeAsync(batched, [
     "Identity_1:0",

@@ -1,13 +1,18 @@
 import { MULL_MODEL_URL, wasteClasses } from "./constants";
-import "./modal";
+import "./dom-elements";
+import {
+  canvas,
+  confirmation,
+  confirmationButton,
+  hiddenCanvas,
+  supportedObjects,
+  video,
+} from "./dom-elements";
+import "./events";
 import { tfjsModel } from "./tfjs.model";
 import { Box, DetectionResult, Size } from "./types";
 import { canvasToImageCoords, coordsInBox, detectFrame, setStatusInfo, showModal } from "./utils";
 
-const canvas = document.getElementById("canvas") as HTMLCanvasElement;
-const hiddenCanvas = document.getElementById("hidden-canvas") as HTMLCanvasElement;
-const video = document.getElementById("video") as HTMLVideoElement;
-const supportedObjects = document.getElementById("supported-objects") as HTMLDivElement;
 supportedObjects.textContent = wasteClasses.join(", ");
 
 export interface ResultRef {
@@ -15,17 +20,19 @@ export interface ResultRef {
 }
 let results: ResultRef = { current: [] };
 
+confirmationButton.addEventListener("click", () => {
+  confirmation.style.display = "none";
+  video.style.display = "block";
+  canvas.style.display = "block";
+  setup();
+});
+
 /**
  * Set up model, camera, listeners and other resources for the waste recognition page
  */
 const setup = async () => {
-  if (canvas) {
-    canvas.addEventListener("click", onCanvasClick);
-  }
-
-  if (video) {
-    video.addEventListener("loadedmetadata", onVideoReady);
-  }
+  canvas.addEventListener("click", onCanvasClick);
+  video.addEventListener("loadedmetadata", onVideoReady);
 
   setStatusInfo("Requesting Access to camera");
 
@@ -124,5 +131,3 @@ const getImageURL = (detectionResult: DetectionResult): string => {
 
   return hiddenCanvas.toDataURL();
 };
-
-setup();
