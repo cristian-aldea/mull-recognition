@@ -2,16 +2,19 @@
   "name": "mull-recognition",
   "scripts": {
     "build-clean": "recursive-delete 'dist'",
-    "build-ts": "rollup --config",
-    "build-css": "sass src/scss/main.scss:dist/css/main.min.css --style compressed --no-source-map",
+    "build-ts-dev": "rollup --config rollup.config.dev.js",
+    "build-ts-prod": "rollup --config rollup.config.prod.js",
+    "build-css-dev": "sass src/scss/main.scss:dist/css/main.css --style expanded",
+    "build-css-prod": "sass src/scss/main.scss:dist/css/main.css --style compressed --no-source-map",
     "build-copy": "recursive-copy 'src/copy' 'dist'",
-    "build": "npm run build-clean && npm-run-all -p build-ts build-css build-copy",
-    "watch-css": "chokidar './src/**/*.scss' -c 'npm run build-css'",
-    "watch-ts": "chokidar './src/**/*.ts' -c 'npm run build-ts'",
+    "build-dev": "npm run build-clean && npm-run-all -p build-ts-dev build-css-dev build-copy",
+    "build-prod": "npm run build-clean && npm-run-all -p build-ts-prod build-css-prod build-copy",
+    "watch-css": "chokidar './src/**/*.scss' -c 'npm run build-css-dev'",
+    "watch-ts": "chokidar './src/**/*.ts' -c 'npm run build-ts-dev'",
     "watch-copy": "chokidar './src/copy/**/*.*' -c 'npm run build-copy'",
     "watch": "npm-run-all -p watch-css watch-ts watch-copy",
     "serve": "browser-sync start --port 8080 --files 'dist' --server 'dist'",
-    "start": "npm run build && npm-run-all -p watch serve"
+    "start": "npm run build-dev && npm-run-all -p watch serve"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^21.0.1",

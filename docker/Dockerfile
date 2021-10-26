@@ -5,7 +5,7 @@ COPY ./ /mull-recognition
 WORKDIR /mull-recognition
 
 RUN npm ci
-RUN npm run build
+RUN npm run build-prod
 
 FROM nginx:stable-alpine
 

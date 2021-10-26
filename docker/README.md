@@ -12,7 +12,7 @@ docker build -f docker/Dockerfile -t cristianaldea/mull-recognition:latest .
 
 # Build using local dist/ to avoid downloading all packages
 npm i
-npm run build
+npm run build-prod
 docker build -f docker/local.Dockerfile -t cristianaldea/mull-recognition:latest .
 ```
 
