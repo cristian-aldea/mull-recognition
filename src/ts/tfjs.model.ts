@@ -1,16 +1,14 @@
+import "@tensorflow/tfjs-backend-webgl";
+import { GraphModel, loadGraphModel } from "@tensorflow/tfjs-converter";
+import { browser, dispose, expandDims, Tensor, tidy } from "@tensorflow/tfjs-core";
 import { wasteClasses } from "./constants";
-import { DetectionResult } from "./types";
+import { Box, DetectionResult } from "./types";
 
-let model: any = null;
-
-// Global variable from tfjs
-// TODO potentially, might be better to use webpack and load tfjs as an npm module
-// doing it through rollupjs leads to a huge bundle
-declare var tf: any;
+let model: GraphModel;
 
 const init = async (modelUrl: string) => {
   if (!model) {
-    model = await tf.loadGraphModel(modelUrl);
+    model = await loadGraphModel(modelUrl);
   }
 };
 
@@ -22,16 +20,21 @@ const detect = async (
     return [];
   }
 
-  const batched = tf.tidy(() => {
-    if (!(input instanceof tf.Tensor)) {
-      input = tf.browser.fromPixels(input);
+  const batched = tidy(() => {
+    if (!(input instanceof Tensor)) {
+      input = browser.fromPixels(input);
     }
     // Reshape to a single-element batch so we can pass it to executeAsync.
-    return tf.expandDims(input);
+    return expandDims(input);
   });
 
   const imageHeight = batched.shape[1];
   const imageWidth = batched.shape[2];
+
+  if (!(imageWidth && imageHeight)) {
+    console.error("detect - imageWidth or imageHeight is undefined");
+    return [];
+  }
 
   /*
         executeAsync will return an array of 8 Tensors, which are the following.
@@ -48,12 +51,12 @@ const detect = async (
         Identity_7:0        raw_detection_scores          [1 1917 5]
        */
 
-  const modelOutput = await model.executeAsync(batched, [
+  const modelOutput = (await model.executeAsync(batched, [
     "Identity_1:0",
     "Identity_2:0",
     "Identity_4:0",
     "Identity_5:0",
-  ]);
+  ])) as Tensor[];
 
   // 1D array with 4 * N elements. bounds are ordered as ymin, xmin, ymax, xmax
   const boxes = await modelOutput[0].data();
@@ -61,7 +64,7 @@ const detect = async (
   const scores = await modelOutput[2].data();
   let numDetections = (await modelOutput[3].data())[0];
 
-  const detectionResults = [];
+  const detectionResults: DetectionResult[] = [];
 
   if (options.numResults < numDetections) {
     numDetections = options.numResults;
@@ -73,8 +76,9 @@ const detect = async (
       break;
     }
 
+    // @ts-ignore
     const [ymin, xmin, ymax, xmax] = boxes.slice(i * 4, (i + 1) * 4);
-    const bndBox = {
+    const bndBox: Box = {
       x: xmin * imageWidth,
       y: ymin * imageHeight,
       width: (xmax - xmin) * imageWidth,
@@ -86,7 +90,7 @@ const detect = async (
 
   // clean the tensors
   batched.dispose();
-  tf.dispose(modelOutput);
+  dispose(modelOutput);
 
   return detectionResults;
 };

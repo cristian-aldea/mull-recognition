@@ -1,23 +1,21 @@
 {
   "name": "mull-recognition",
-  "license": "MIT",
-  "author": {
-    "name": "Cristian Aldea",
-    "url": "https://www.cristianaldea.com"
-  },
   "scripts": {
     "build-clean": "recursive-delete 'dist'",
     "build-ts": "rollup --config",
-    "build-css": "node sass.js",
+    "build-css": "sass src/scss/main.scss:dist/css/main.min.css --style compressed --no-source-map",
     "build-copy": "recursive-copy 'src/copy' 'dist'",
-    "build": "npm-run-all -s build-clean build-ts build-css build-copy",
+    "build": "npm run build-clean && npm-run-all -p build-ts build-css build-copy",
     "watch-css": "chokidar './src/**/*.scss' -c 'npm run build-css'",
     "watch-ts": "chokidar './src/**/*.ts' -c 'npm run build-ts'",
     "watch-copy": "chokidar './src/copy/**/*.*' -c 'npm run build-copy'",
-    "watch": "npm-run-all -p build watch-css watch-ts watch-copy",
-    "serve": "browser-sync start --port 8080 --files 'dist' --server 'dist'"
+    "watch": "npm-run-all -p watch-css watch-ts watch-copy",
+    "serve": "browser-sync start --port 8080 --files 'dist' --server 'dist'",
+    "start": "npm run build && npm-run-all -p watch serve"
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^21.0.1",
+    "@rollup/plugin-node-resolve": "^13.0.6",
     "@rollup/plugin-typescript": "^8.3.0",
     "browser-sync": "^2.27.5",
     "chokidar-cli": "^3.0.0",
@@ -25,6 +23,10 @@
     "recursive-fs": "^2.1.0",
     "rollup": "^2.58.0",
     "rollup-plugin-terser": "^7.0.2",
-    "sass": "^1.43.3"
+    "sass": "^1.43.3",
+    "typescript": "^4.4.4"
+  },
+  "dependencies": {
+    "@tensorflow/tfjs": "^3.10.0"
   }
 }

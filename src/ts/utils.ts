@@ -33,8 +33,6 @@ export const showModal = (object: DetectionResult, imageSrc: string) => {
 };
 
 export const closeModal = () => {
-  console.log("e");
-
   modal.style.display = "none";
 };
 
