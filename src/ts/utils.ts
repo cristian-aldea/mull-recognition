@@ -11,7 +11,7 @@ import { ResultRef } from "./main";
 import { TFJSModel } from "./tfjs.model";
 import { Box, DetectionResult, Point, Size } from "./types";
 
-export const setStatusInfo = (message: any) => {
+export const setStatusInfo = (message: string) => {
   statusInfo.textContent = message;
   if (message) {
     statusInfo.style.display = "block";

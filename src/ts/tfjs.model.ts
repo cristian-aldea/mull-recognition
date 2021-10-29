@@ -1,6 +1,6 @@
 import "@tensorflow/tfjs-backend-webgl";
 import { GraphModel, loadGraphModel } from "@tensorflow/tfjs-converter";
-import { browser, dispose, expandDims, Tensor, tidy } from "@tensorflow/tfjs-core";
+import { browser, dispose, expandDims, Tensor, Tensor3D, tidy } from "@tensorflow/tfjs-core";
 import { wasteClasses } from "./constants";
 import { Box, DetectionResult } from "./types";
 
@@ -13,7 +13,7 @@ const init = async (modelUrl: string) => {
 };
 
 const detect = async (
-  input: any,
+  input: HTMLVideoElement | Tensor3D,
   options = { numResults: 20, threshold: 0.5 }
 ): Promise<DetectionResult[]> => {
   if (!model) {
@@ -76,8 +76,7 @@ const detect = async (
       break;
     }
 
-    // @ts-ignore
-    const [ymin, xmin, ymax, xmax] = boxes.slice(i * 4, (i + 1) * 4);
+    const [ymin, xmin, ymax, xmax] = boxes.slice(i * 4, (i + 1) * 4) as unknown as number[];
     const bndBox: Box = {
       x: xmin * imageWidth,
       y: ymin * imageHeight,
@@ -100,12 +99,9 @@ export interface DetectionOptions {
   threshold: number;
 }
 
-export interface TFJSModel {
-  init(modelUrl: string): Promise<void>;
-  detect(input: any, options: DetectionOptions): Promise<DetectionResult[]>;
-}
-
-export const tfjsModel: TFJSModel = {
+export const tfjsModel = {
   init,
   detect,
 };
+
+export type TFJSModel = typeof tfjsModel;

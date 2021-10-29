@@ -18,7 +18,7 @@ supportedObjects.textContent = wasteClasses.join(", ");
 export interface ResultRef {
   current: DetectionResult[];
 }
-let results: ResultRef = { current: [] };
+const results: ResultRef = { current: [] };
 
 confirmationButton.addEventListener("click", () => {
   confirmation.style.display = "none";
@@ -63,7 +63,7 @@ const onVideoReady = async () => {
 
 const setupCamera = async () => {
   if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-    let stream = await navigator.mediaDevices.getUserMedia({
+    const stream = await navigator.mediaDevices.getUserMedia({
       video: { facingMode: "environment", width: { ideal: 99999 }, height: { ideal: 99999 } },
       audio: false,
     });
