@@ -10,8 +10,4 @@ RUN npm run build-prod
 FROM nginx:stable-alpine
 
 COPY --from=build /mull-recognition/dist/ /usr/share/nginx/html
-
-COPY docker/mull-recognition/nginx.conf /etc/nginx/nginx.conf
-
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+COPY docker/nginx.conf /etc/nginx/nginx.conf
