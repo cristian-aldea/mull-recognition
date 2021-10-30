@@ -99,9 +99,12 @@ export interface DetectionOptions {
   threshold: number;
 }
 
-export const tfjsModel = {
+const tfjsModel = {
+  model,
   init,
   detect,
 };
+
+export default tfjsModel;
 
 export type TFJSModel = typeof tfjsModel;

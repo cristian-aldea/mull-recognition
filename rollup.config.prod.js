@@ -7,10 +7,11 @@ export default {
   input: "src/ts/main.ts",
   plugins: [typescript(), commonjs(), nodeResolve()],
   output: {
-    file: "dist/js/main.js",
-    format: "iife",
+    dir: "dist/js/",
+    format: "es",
     name: "main",
     plugins: [terser({ output: { comments: false } })],
     sourcemap: false,
   },
+  preserveEntrySignatures: false,
 };

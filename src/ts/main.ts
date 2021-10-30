@@ -9,7 +9,6 @@ import {
   video,
 } from "./dom-elements";
 import "./events";
-import { tfjsModel } from "./tfjs.model";
 import { Box, DetectionResult, Size } from "./types";
 import { canvasToImageCoords, coordsInBox, detectFrame, setStatusInfo, showModal } from "./utils";
 
@@ -19,6 +18,7 @@ export interface ResultRef {
   current: DetectionResult[];
 }
 const results: ResultRef = { current: [] };
+let tfjsModel = null;
 
 confirmationButton.addEventListener("click", () => {
   confirmation.style.display = "none";
@@ -49,6 +49,8 @@ const onVideoReady = async () => {
   setStatusInfo("Warming up the ML model");
 
   try {
+    const tfjsModelImport = await import("./tfjs.model");
+    tfjsModel = tfjsModelImport.default;
     await tfjsModel.init(MULL_MODEL_URL);
   } catch (err) {
     console.error(err);
@@ -82,7 +84,7 @@ const setupCamera = async () => {
   }
 };
 
-export const onCanvasClick = (event: MouseEvent) => {
+const onCanvasClick = (event: MouseEvent) => {
   const canvas = event.target as HTMLCanvasElement;
   const canvasBox: Box = {
     x: event.offsetX,

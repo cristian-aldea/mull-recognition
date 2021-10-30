@@ -3,12 +3,13 @@ import { nodeResolve } from "@rollup/plugin-node-resolve";
 import typescript from "@rollup/plugin-typescript";
 
 export default {
-  input: `src/ts/main.ts`,
+  input: "src/ts/main.ts",
   plugins: [typescript(), commonjs(), nodeResolve()],
   output: {
-    file: `dist/js/main.js`,
-    format: "iife",
+    dir: "dist/js/",
+    format: "es",
     name: "main",
     sourcemap: true,
   },
+  preserveEntrySignatures: false,
 };
