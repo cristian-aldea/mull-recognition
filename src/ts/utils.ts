@@ -23,11 +23,11 @@ export const setStatusInfo = (message: string) => {
 export const showModal = (object: DetectionResult, imageSrc: string) => {
   const classInfo = wasteClassMap[object.class];
   modalIcon.src = WasteIconMap[classInfo.category].url;
-  modalTitle.textContent = object.class;
+  modalTitle.textContent = capitalizeString(object.class);
   modalImage.src = imageSrc;
-  modalDescription.textContent = `This seems to be ${
-    object.class !== "food" ? "a " : ""
-  }${capitalizeString(object.class)}. ${classInfo.info}`;
+  modalDescription.textContent = `This seems to be ${object.class !== "food" ? "a " : ""}${
+    object.class
+  }. ${classInfo.info}`;
   modal.style.display = "block";
 };
 

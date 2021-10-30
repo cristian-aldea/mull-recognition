@@ -34,19 +34,19 @@ const setup = async () => {
   canvas.addEventListener("click", onCanvasClick);
   video.addEventListener("loadedmetadata", onVideoReady);
 
-  setStatusInfo("Requesting Access to camera");
+  setStatusInfo("Requesting access to camera");
 
   try {
     await setupCamera();
   } catch (err) {
     console.error(err);
-    setStatusInfo("Error: Cannot access camera");
+    setStatusInfo("Cannot access camera. this app requires a camera to work.");
     return;
   }
 };
 
 const onVideoReady = async () => {
-  setStatusInfo("Warming up the ML model");
+  setStatusInfo("Loading app...");
 
   try {
     const tfjsModelImport = await import("./tfjs.model");
@@ -54,11 +54,11 @@ const onVideoReady = async () => {
     await tfjsModel.init(MULL_MODEL_URL);
   } catch (err) {
     console.error(err);
-    setStatusInfo("Error loading ML model");
+    setStatusInfo("Failed to load app, your device might not be supported :(");
     return;
   }
 
-  setStatusInfo("Model Loaded Successfully! Finishing setup...");
+  setStatusInfo("App loaded successfully! Finishing up...");
 
   detectFrame(video, tfjsModel, canvas, results);
 };
