@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -10,13 +11,28 @@
 
     <!-- links -->
     <link rel="icon" type="image/x-icon" href="favicon.png" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital@0;1&amp;display=swap"
-      rel="stylesheet"
-    />
     <link rel="stylesheet" href="css/main.css" />
+
+    <!-- styles -->
+    <style>
+      @font-face {
+        font-family: "Roboto Mono";
+        font-style: normal;
+        font-weight: 400;
+        src: local(""), url("fonts/roboto-mono-v13-latin-regular.woff2") format("woff2"),
+          url("fonts/roboto-mono-v13-latin-regular.woff") format("woff");
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: "Roboto Mono";
+        font-style: italic;
+        font-weight: 400;
+        src: local(""), url("fonts/roboto-mono-v13-latin-italic.woff2") format("woff2"),
+          url("fonts/roboto-mono-v13-latin-italic.woff") format("woff");
+        font-display: swap;
+      }
+    </style>
 
     <!-- scripts -->
     <script src="js/main.js" defer type="module"></script>
