@@ -5,8 +5,11 @@ git branch -D gh-pages
 git checkout -b gh-pages
 
 mkdir docs
+echo "mull.cristianaldea.com" > docs/CNAME
+git add docs/
+git commit -m "Create CNAME"
 
-npm run build-prod
+npm run build
 mv dist/* docs
 git add docs/
 git commit -m "Deploy website"
