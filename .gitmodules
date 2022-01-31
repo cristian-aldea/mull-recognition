@@ -1,0 +1,4 @@
+[submodule "web-toolbox"]
+	path = web-toolbox
+	url = https://github.com/cristian-aldea/web-toolbox.git
+	branch = main

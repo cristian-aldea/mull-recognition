@@ -4,7 +4,7 @@ import { browser, dispose, expandDims, Tensor, Tensor3D, tidy } from "@tensorflo
 import { wasteClasses } from "./constants";
 import { Box, DetectionResult } from "./types";
 
-let model: GraphModel;
+let model: GraphModel | null = null;
 
 const init = async (modelUrl: string) => {
   if (!model) {
