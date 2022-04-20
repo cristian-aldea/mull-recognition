@@ -25,7 +25,7 @@ confirmationButton.addEventListener("click", () => {
   confirmation.style.display = "none";
   video.style.display = "block";
   canvas.style.display = "block";
-  setup();
+  void setup();
 });
 
 /**
@@ -46,22 +46,24 @@ const setup = async () => {
   }
 };
 
-const onVideoReady = async () => {
-  setStatusInfo("Loading app...");
+const onVideoReady = () => {
+  void (async () => {
+    setStatusInfo("Loading app...");
 
-  try {
-    const tfjsModelImport = await import("./tfjs.model");
-    tfjsModel = tfjsModelImport.default;
-    await tfjsModel.init(MULL_MODEL_URL);
-  } catch (err) {
-    console.error(err);
-    setStatusInfo("Failed to load app, your device might not be supported :(");
-    return;
-  }
+    try {
+      const tfjsModelImport = await import("./tfjs.model");
+      tfjsModel = tfjsModelImport.default;
+      await tfjsModel.init(MULL_MODEL_URL);
+    } catch (err) {
+      console.error(err);
+      setStatusInfo("Failed to load app, your device might not be supported :(");
+      return;
+    }
 
-  setStatusInfo("App loaded successfully! Finishing up...");
+    setStatusInfo("App loaded successfully! Finishing up...");
 
-  detectFrame(video, tfjsModel, canvas, results);
+    void detectFrame(video, tfjsModel, canvas, results);
+  })();
 };
 
 const setupCamera = async () => {
@@ -72,7 +74,7 @@ const setupCamera = async () => {
     });
 
     video.srcObject = stream;
-    video.play();
+    void video.play();
 
     video.onloadedmetadata = () => {
       // Doesn't work on all browsers. Keeping it here just in case

@@ -43,7 +43,7 @@ export const detectFrame = async (
   }
   drawDetectionIcons(canvas, results);
   requestAnimationFrame(() => {
-    detectFrame(video, model, canvas, results);
+    void detectFrame(video, model, canvas, results);
   });
 };
 
