@@ -1,4 +1,4 @@
-import { modal, modalClose, modalForeground } from "./dom-elements";
+import { modal, modalClose, modalForeground } from "./dom";
 import { closeModal } from "./utils";
 
 // modal

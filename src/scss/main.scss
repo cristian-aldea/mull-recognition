@@ -1,11 +1,19 @@
 @import "variables.scss";
 @import "modal.scss";
 
-// CSS reset
-html,
-body {
+// CSS Reset
+* {
   margin: 0;
   padding: 0;
+  border: 0;
+  font-size: inherit;
+  color: inherit;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+html,
+body {
   background-color: #181818;
   color: white;
 

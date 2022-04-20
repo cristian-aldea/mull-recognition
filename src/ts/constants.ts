@@ -1,3 +1,7 @@
+import compostIconUrl from "../../assets/svg/compost-icon.svg";
+import ewasteIconUrl from "../../assets/svg/e-waste-icon.svg";
+import recyclableIconUrl from "../../assets/svg/recycle-icon.svg";
+import trashIconUrl from "../../assets/svg/trash-icon.svg";
 import { WasteCategory, WasteClassMapType } from "./types";
 
 export const MULL_MODEL_URL =
@@ -43,10 +47,10 @@ export const wasteClassMap: WasteClassMapType = {
 };
 
 export const WasteIconMap: { [a in WasteCategory]: { image: HTMLImageElement; url: string } } = {
-  [WasteCategory.COMPOST]: { image: new Image(), url: "svg/compost-icon.svg" },
-  [WasteCategory.EWASTE]: { image: new Image(), url: "svg/e-waste-icon.svg" },
-  [WasteCategory.TRASH]: { image: new Image(), url: "svg/trash-icon.svg" },
-  [WasteCategory.RECYCLABLE]: { image: new Image(), url: "svg/recycle-icon.svg" },
+  [WasteCategory.COMPOST]: { image: new Image(), url: compostIconUrl },
+  [WasteCategory.EWASTE]: { image: new Image(), url: ewasteIconUrl },
+  [WasteCategory.TRASH]: { image: new Image(), url: trashIconUrl },
+  [WasteCategory.RECYCLABLE]: { image: new Image(), url: recyclableIconUrl },
 };
 
 for (const entry of Object.values(WasteIconMap)) {

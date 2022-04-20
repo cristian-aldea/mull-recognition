@@ -1,5 +1,6 @@
+import "../scss/main.scss";
 import { MULL_MODEL_URL, wasteClasses } from "./constants";
-import "./dom-elements";
+import "./dom";
 import {
   canvas,
   confirmation,
@@ -7,7 +8,7 @@ import {
   hiddenCanvas,
   supportedObjects,
   video,
-} from "./dom-elements";
+} from "./dom";
 import "./events";
 import { Box, DetectionResult, Size } from "./types";
 import { canvasToImageCoords, coordsInBox, detectFrame, setStatusInfo, showModal } from "./utils";

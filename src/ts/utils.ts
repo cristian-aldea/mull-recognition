@@ -1,12 +1,5 @@
 import { wasteClassMap, WasteIconMap } from "./constants";
-import {
-  modal,
-  modalDescription,
-  modalIcon,
-  modalImage,
-  modalTitle,
-  statusInfo,
-} from "./dom-elements";
+import { modal, modalDescription, modalIcon, modalImage, modalTitle, statusInfo } from "./dom";
 import { ResultRef } from "./main";
 import { TFJSModel } from "./tfjs.model";
 import { Box, DetectionResult, Point, Size } from "./types";
