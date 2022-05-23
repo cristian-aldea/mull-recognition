@@ -1,6 +1,5 @@
-import "@tensorflow/tfjs-backend-webgl";
-import { GraphModel, loadGraphModel } from "@tensorflow/tfjs-converter";
-import { browser, dispose, expandDims, Tensor, Tensor3D, tidy } from "@tensorflow/tfjs-core";
+import * as tf from "@tensorflow/tfjs";
+import { GraphModel, Tensor } from "@tensorflow/tfjs";
 import { wasteClasses } from "./constants";
 import { Box, DetectionResult } from "./types";
 
@@ -8,25 +7,22 @@ let model: GraphModel | null = null;
 
 const init = async (modelUrl: string) => {
   if (!model) {
-    model = await loadGraphModel(modelUrl);
+    model = await tf.loadGraphModel(modelUrl);
   }
 };
 
 const detect = async (
-  input: HTMLVideoElement | Tensor3D,
+  input: HTMLVideoElement,
   options = { numResults: 20, threshold: 0.5 }
 ): Promise<DetectionResult[]> => {
   if (!model) {
     return [];
   }
 
-  const batched = tidy(() => {
-    if (!(input instanceof Tensor)) {
-      input = browser.fromPixels(input);
-    }
-    // Reshape to a single-element batch so we can pass it to executeAsync.
-    return expandDims(input);
-  });
+  let temp = tf.browser.fromPixels(input);
+
+  const batched = tf.expandDims(temp);
+  temp.dispose();
 
   const imageHeight = batched.shape[1];
   const imageWidth = batched.shape[2];
@@ -57,12 +53,14 @@ const detect = async (
     "Identity_4:0",
     "Identity_5:0",
   ])) as Tensor[];
+  batched.dispose();
 
   // 1D array with 4 * N elements. bounds are ordered as ymin, xmin, ymax, xmax
   const boxes = await modelOutput[0].data();
   const classes = await modelOutput[1].data();
   const scores = await modelOutput[2].data();
   let numDetections = (await modelOutput[3].data())[0];
+  tf.dispose(modelOutput);
 
   const detectionResults: DetectionResult[] = [];
 
@@ -86,10 +84,6 @@ const detect = async (
     const clazz = wasteClasses[Math.round(classes[i] - 1)];
     detectionResults.push({ bndBox, class: clazz, confidence: scores[i] });
   }
-
-  // clean the tensors
-  batched.dispose();
-  dispose(modelOutput);
 
   return detectionResults;
 };
